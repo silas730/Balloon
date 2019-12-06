@@ -1,0 +1,13 @@
+Todo:
+
+-Open new file when it gets to long.
+-Add debug LED.
+-Add light sensor.
+-Remove Serial prints for each sensor.
+-Add serial debug interface.
+-Use GPS time.
+
+Tests:
+
+-File system test.
+-Battery test.
