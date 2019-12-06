@@ -1,11 +1,13 @@
 Todo:
 
--Open new file when it gets to long.
+-Open new file when it gets to long. --> IMPORTANT!
 -Add debug LED.
 -Add light sensor.
 -Remove Serial prints for each sensor.
 -Add serial debug interface.
 -Use GPS time.
+-Update data header
+-Add gps fix/accuracy check
 
 Tests:
 
