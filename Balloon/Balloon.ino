@@ -161,9 +161,41 @@ void loop() {
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
 
+    //Writes and prints latitude in decimal degrees
+    Serial.print(latitude);
+    dataFile.print(latitude);
 
+    Serial.print(F("\t"));
+    dataFile.print(F("\t"));
 
+    //Writes and prints longitude in decimal degrees
+    Serial.print(longitude);
+    dataFile.print(longitude);
 
+    Serial.print(F("\t"));
+    dataFile.print(F("\t"));
+
+    //Writes and prints altitude in meters
+    Serial.print(altitude);
+    dataFile.print(altitude);
+
+    Serial.print(F("\t"));
+    dataFile.print(F("\t"));
+
+    //Writes and prints current speed over ground in knots 
+    Serial.print(gpsSpeed);
+    dataFile.print(gpsSpeed);
+
+    Serial.print(F("\t"));
+    dataFile.print(F("\t"));
+
+    //Writes and prints course in degrees from true north
+    Serial.print(angle);
+    dataFile.print(angle);
+
+    Serial.print(F("\t"));
+    dataFile.print(F("\t"));
+    
     Serial.println();
     dataFile.println();
     geiger_ct = 0;
