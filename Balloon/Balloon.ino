@@ -105,18 +105,21 @@ void loop() {
     /*External Pressure from honeywell sensor*/
     float extPressure = honeywellPressure();
     /*External temperature sensor from lm335 sensor.*/
-    float extTemp = lm335Temp(LM335TEMP_PIN, L335UNITS);
+    float extTemp = lm335Temp(LM335TEMP_PIN, LM335UNITS);
 
     /*Latitude in decimal degrees*/
-    float latitude = GPS.latitudeDegrees();
+    float latitude = GPS.latitudeDegrees;
     /*Longitude in decimal degrees*/
-    float longitude = GPS.longitudeDegrees();
+    float longitude = GPS.longitudeDegrees;
     /*Altitude in meters above sea level*/
-    float altitude = GPS.altitude();
+    float altitude = GPS.altitude;
     /*Current speed over ground in knots*/
-    float gpsSpeed = GPS.speed();
+    float gpsSpeed = GPS.speed;
     /*Course in degrees from true north*/
-    float angle = GPS.angle();
+    float angle = GPS.angle;
+
+    /*GMT time from gps Hours:Minutes:Seconds*/
+    String time = getTime();
 
     //Writes and prints the time from start
     Serial.print(timeFromStart);
@@ -198,11 +201,27 @@ void loop() {
     
     Serial.println();
     dataFile.println();
+
+    //Writes and prints the time down to the second in GMT
+    Serial.print(time);
+    dataFile.print(time);
+
+    Serial.println();
+    dataFile.println();    
+    
     geiger_ct = 0;
   }
  dataFile.close();
 }
 
+/**
+ * 
+ */
+String getTime(){
+  //String time = GPS.hour + ":" + GPS.minute + ":" + GPS.seconds;
+  //return time;
+  return String(GPS.hour) + ":" + GPS.minute + ":" + GPS.seconds;
+}
 /**
  * returns the average geiger counts over 5 seconds
  */
@@ -239,7 +258,7 @@ float bmpTemperature(){
 
 float lm335Temp(int pin, int units){
   int raw = analogRead(pin) - 563;
-  float temp_k = (float)lm335_raw*513/1023;
+  float temp_k = (float)raw*513/1023;
   float temp_c = temp_k - 273.15;
   float temp_f = temp_c*1.8 + 32;
 
