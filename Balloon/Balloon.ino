@@ -74,7 +74,8 @@ void setup() {
   GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA); //this mode cuts out a bunch of the more technical data, if we need more I can change it.
   GPS.sendCommand(PMTK_SET_NMEA_UPDATE_200_MILLIHERTZ); //Update internal data storage every 5 seconds
 
-  
+  //openFile();
+  dataFile = SD.open("data.txt", FILE_WRITE);
 }
 
 
@@ -86,8 +87,6 @@ void loop() {
     if (!GPS.parse(GPS.lastNMEA())) return;
   }
 
-  
-  dataFile = SD.open("data.txt", FILE_WRITE);
   if(millis() - time_start > 5000){
     
     time_start = millis();
@@ -208,20 +207,32 @@ void loop() {
 
     Serial.println();
     dataFile.println();    
-    
+
     geiger_ct = 0;
   }
- dataFile.close();
+ dataFile.flush();
 }
 
 /**
- * 
+ * Gets the time  in GMT from the gps
+ * @return GMT time as hour:minute:second
  */
 String getTime(){
   //String time = GPS.hour + ":" + GPS.minute + ":" + GPS.seconds;
   //return time;
   return String(GPS.hour) + ":" + GPS.minute + ":" + GPS.seconds;
 }
+/* //Creates file with a new name
+void openFile(){
+  String fileName = "data.txt";
+  unsigned int fileNumber = 1;
+  while (SD.exists(fileName)){
+  fileName = String("data") + fileNumber + ".txt";
+  fileNumber++;
+  }
+  dataFile = SD.open(fileName, FILE_WRITE);
+}
+*/
 /**
  * returns the average geiger counts over 5 seconds
  */
