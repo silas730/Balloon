@@ -1,11 +1,10 @@
 Todo:
 
--Open new file when it gets to long. --> IMPORTANT!
+-Program space
 -Add debug LED.
 -Add light sensor.
--Remove Serial prints for each sensor.
+-Remove Serial prints for each sensor. -> When finished with everything else
 -Add serial debug interface.
--Use GPS time.
 -Update data header
 -Add gps fix/accuracy check
 
@@ -13,3 +12,4 @@ Tests:
 
 -File system test.
 -Battery test.
+-Test GPS time
