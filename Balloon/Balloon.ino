@@ -157,7 +157,10 @@ void loop() {
     //Writes and prints the external Pressure
     Serial.print(extPressure);
     dataFile.print(extPressure);
-
+    
+    Serial.print(F("\t"));
+    dataFile.print(F("\t"));
+    
     //Writes and prints external temperature
     Serial.print(extTemp);
     dataFile.print(extTemp);
