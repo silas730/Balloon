@@ -1,4 +1,5 @@
 #define LM335TEMP_PIN A0
+#define REF_V 5.02
 int lm335_raw;
 float lm335_cel;
 
@@ -14,7 +15,7 @@ void setup() {
 void loop() {
   lm335_raw = analogRead(LM335TEMP_PIN);
   
-  lm335_cel = lm335Temp(LM335TEMP_PIN, 1);
+  lm335_cel = lm335Temp(LM335TEMP_PIN, 0);
 
   Serial.print("Temp (°C) = ");
   Serial.println(lm335_cel);
@@ -31,8 +32,8 @@ void loop() {
 //2 - Fahrenheit
 
 float lm335Temp(int pin, int units){
-  int raw = analogRead(pin) - 563;
-  float temp_k = (float)lm335_raw*513/1023;
+  int raw = analogRead(pin);
+  float temp_k = (float)raw*REF_V*100/1023;
   float temp_c = temp_k - 273.15;
   float temp_f = temp_c*1.8 + 32;
 

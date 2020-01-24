@@ -10,6 +10,7 @@
 /*lm335 temp setup*/
 #define LM335TEMP_PIN A0 //A0-A5
 #define LM335UNITS 1 //0 for Kelvin. 1 for Celsius. 2 for Fahrenheit
+#define REF_V 5.02
 
 /*GPS Stuff*/
 //8 > TX; 7 > RX (can be changed)
@@ -269,8 +270,8 @@ float bmpTemperature(){
 //2 - Fahrenheit
 
 float lm335Temp(int pin, int units){
-  int raw = analogRead(pin) - 563;
-  float temp_k = (float)raw*513/1023;
+  int raw = analogRead(pin);
+  float temp_k = (float)raw*REF_V*100/1023;
   float temp_c = temp_k - 273.15;
   float temp_f = temp_c*1.8 + 32;
 
