@@ -62,11 +62,12 @@ void setup() {
     Serial.println(F("SD card reader initialization failed"));
   }
                   
-  Serial.println(F("Time (sec):\tClicks per secound:\tPressure (Pa)\tTemperature (°C) \tRel Humidity:\t Pressure (Pa):\n"));
-  
+  Serial.println(F("Time (sec):\tClicks per secound:\t Internal Pressure (Pa)\tInternal Temperature (°C) \tRel Humidity:\tExternal Pressure (Pa): \t External Temp: \tLatitude: \tLongitude: \tAltitude(m) \tSpeed(knts) \tDirection: \tTime\n"));
+
+  //Opens the data file and marks the start
   dataFile = SD.open("data.txt", FILE_WRITE);
   dataFile.println("\n--------------Start--------------");
-  dataFile.close();
+  dataFile.flush();
 
   /*Starts the GPS*/
   GPS.begin(9600);
@@ -75,7 +76,7 @@ void setup() {
   GPS.sendCommand(PMTK_SET_NMEA_UPDATE_200_MILLIHERTZ); //Update internal data storage every 5 seconds
 
   //openFile();
-  dataFile = SD.open("data.txt", FILE_WRITE);
+  //dataFile = SD.open("data.txt", FILE_WRITE);
 }
 
 
