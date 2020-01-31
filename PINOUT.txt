@@ -1,0 +1,45 @@
+SD Card:
+
+Vcc:  +5V
+GND:  GND
+CS:   DIO 10
+MOSI: DIO 11
+MISO: DIO 12
+SCK:  DIO 13
+
+Ultimate GPS from adafruit:
+
+Vin: +5V
+GND: GND
+RX:  DIO 2
+TX:  DIO 3
+
+Si7021 Temp/Humidity Sensor:
+
+Vin: +5V
+GND: GND
+SDA: DIO 20 Mega - A4 Uno
+SCL: DIO 21 Mega - A5 Uno
+
+BMP280 Temp/Pressure Sensor:
+
+Vin: +5V
+GND: GND
+SDI: DIO 20 Mega - A4 Uno
+SCK: DIO 21 Mega - A5 Uno
+
+HSCDANN001BA2A3 pressure sensor:
+					   ________
+1 - GND: GND				1 -|O     |- 8
+2 - Vcc: 3.3V                           2 -|      |- 7 
+3 - SDA: DIO 20 Mega - A4 Uno           3 -|      |- 6    
+4 - SCL: DIO 21 Mega - A5 Uno           4 -|      |- 5
+5-8 NC:  do not use.                       --------
+
+LM335 Temp Sensor:
+
+Data in: A0
+
+LED: 
+
+DIO 2
