@@ -7,7 +7,7 @@ Todo:
 -Add serial debug interface.
 -Update data header
 -Add gps fix/accuracy check
--Initialization of SC card reader and temp/pressure sensor repeatedly failed. Investage. 
+-Initialization of BMP280 temp/pressure sensor repeatedly failed. Realted to I2C. 
 
 Tests:
 

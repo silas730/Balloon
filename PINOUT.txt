@@ -2,10 +2,10 @@ SD Card:
 
 Vcc:  +5V
 GND:  GND
-CS:   DIO 10
-MOSI: DIO 11
-MISO: DIO 12
-SCK:  DIO 13
+CS:   DIO 53 Mega - DIO 10 Uno
+MOSI: DIO 51 Mega - DIO 11 Uno
+MISO: DIO 50 Mega - DIO 12 Uno
+SCK:  DIO 52 Mega - DIO 13 Uno
 
 Ultimate GPS from adafruit:
 
@@ -42,4 +42,10 @@ Data in: A0
 
 LED: 
 
-DIO 2
+DIO 31
+
+Geiger Counter:
+
+Interrupt pin : DIO 18
+
+
