@@ -8,7 +8,7 @@
 #include <SoftwareSerial.h>
 
 boolean startupCheck = true;
-int led = 13; //The LED pin
+int led = 31; //The LED pin
 
 /*lm335 temp setup*/
 #define LM335TEMP_PIN A0 //A0-A5
@@ -26,7 +26,7 @@ Adafruit_BMP280 bmp;
 Adafruit_Si7021 humSensor = Adafruit_Si7021();
 
 /*Geiger Counter Variables*/
-#define GEIGER1_PIN 2 
+#define GEIGER1_PIN 18 
 int geiger_ct = 0;
 void count_geiger(void);
 
@@ -79,12 +79,13 @@ void setup() {
   dataFile.println("\n--------------Start--------------");
   dataFile.flush();
 
-  /*Starts the GPS*/
+  /*Starts the GPS*
   if (!GPS.begin(9600)){
     Serial.println(F("GPS failed to start"));
     startupCheck = false;
   }
-
+  */
+  GPS.begin(9600);
   GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA); //this mode cuts out a bunch of the more technical data, if we need more I can change it.
   GPS.sendCommand(PMTK_SET_NMEA_UPDATE_200_MILLIHERTZ); //Update internal data storage every 5 seconds
 
@@ -220,8 +221,8 @@ void loop() {
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
     
-    Serial.println();
-    dataFile.println();
+    //Serial.println();
+    //dataFile.println();
 
     //Writes and prints the time down to the second in GMT
     Serial.print(time);
