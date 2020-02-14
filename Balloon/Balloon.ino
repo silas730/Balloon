@@ -89,6 +89,11 @@ void setup() {
   GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA); //this mode cuts out a bunch of the more technical data, if we need more I can change it.
   GPS.sendCommand(PMTK_SET_NMEA_UPDATE_200_MILLIHERTZ); //Update internal data storage every 5 seconds
 
+  if (lm335Temp(LM335TEMP_PIN, LM335UNITS) < -20 || lm335Temp(LM335TEMP_PIN, LM335UNITS) > 70) {
+    Serial.print(F("Exteranl temperature sensor not found")); 
+    startupCheck = false;
+  }
+  
   //If a sensor fails to initialize the led will turn on
   if (!startupCheck) {
     digitalWrite(led, HIGH);
