@@ -2,6 +2,14 @@ Todo:
 
 -Program space
 -Add debug LED.
+  -Internal Temp/Pressure - Done
+  -Humidity Sensor - Done
+  -External Pressure - Done
+  -SD card reader - Done
+  -GPS Start - Done
+  -GPS fix
+  -Geiger counter
+  -External temp
 -Add light sensor.
 -Remove Serial prints for each sensor. -> When finished with everything else
 -Add serial debug interface.

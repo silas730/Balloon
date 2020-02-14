@@ -7,6 +7,9 @@
 #include <Adafruit_GPS.h>
 #include <SoftwareSerial.h>
 
+boolean startupCheck = true;
+int led = 31; //The LED pin
+
 /*lm335 temp setup*/
 #define LM335TEMP_PIN A0 //A0-A5
 #define LM335UNITS 1 //0 for Kelvin. 1 for Celsius. 2 for Fahrenheit
@@ -23,7 +26,7 @@ Adafruit_BMP280 bmp;
 Adafruit_Si7021 humSensor = Adafruit_Si7021();
 
 /*Geiger Counter Variables*/
-#define GEIGER1_PIN 2 
+#define GEIGER1_PIN 18 
 int geiger_ct = 0;
 void count_geiger(void);
 
@@ -33,6 +36,8 @@ unsigned long time_start = 0;
 File dataFile;
 
 void setup() {
+
+  pinMode(led, OUTPUT);
   // put your setup code here, to run once:
   attachInterrupt(digitalPinToInterrupt(GEIGER1_PIN), count_geiger, FALLING);//Interrupt for geiger counter, triggers in falling edge
   
@@ -40,17 +45,20 @@ void setup() {
   //Starts Temp/Pressure sensor
   if (!bmp.begin()) {
     Serial.println(F("Could not find temp/pressure sensor"));
-    while(1);
+    startupCheck = false;
+    //while(1);
   }
   //Starts humidity Sensor
   if (!humSensor.begin()) {
     Serial.println(F("Could not find si7021 Sensor"));
-    while(1);
+    startupCheck = false;
+    //while(1);
   }
   //Starts honeywell pressure sensor
   if(initHoneywell() == 4){
       Serial.println(F("No honeywell pressure sensor detected"));
-      while(1);
+      startupCheck = false;
+      //while(1);
   }
   //Setup for Adafruit temp/hum sensor
   bmp.setSampling(Adafruit_BMP280::MODE_NORMAL, /*Mode*/
@@ -61,6 +69,7 @@ void setup() {
 
   if (!SD.begin()){
     Serial.println(F("SD card reader initialization failed"));
+    startupCheck = false;
   }
                   
   Serial.println(F("Time (sec):\tClicks per secound:\t Internal Pressure (Pa)\tInternal Temperature (°C) \tRel Humidity:\tExternal Pressure (Pa): \t External Temp: \tLatitude: \tLongitude: \tAltitude(m) \tSpeed(knts) \tDirection: \tTime\n"));
@@ -70,11 +79,20 @@ void setup() {
   dataFile.println("\n--------------Start--------------");
   dataFile.flush();
 
-  /*Starts the GPS*/
+  /*Starts the GPS*
+  if (!GPS.begin(9600)){
+    Serial.println(F("GPS failed to start"));
+    startupCheck = false;
+  }
+  */
   GPS.begin(9600);
-
   GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA); //this mode cuts out a bunch of the more technical data, if we need more I can change it.
   GPS.sendCommand(PMTK_SET_NMEA_UPDATE_200_MILLIHERTZ); //Update internal data storage every 5 seconds
+
+  //If a sensor fails to initialize the led will turn on
+  if (!startupCheck) {
+    digitalWrite(led, HIGH);
+  }
 
   //openFile();
   //dataFile = SD.open("data.txt", FILE_WRITE);
@@ -203,8 +221,8 @@ void loop() {
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
     
-    Serial.println();
-    dataFile.println();
+    //Serial.println();
+    //dataFile.println();
 
     //Writes and prints the time down to the second in GMT
     Serial.print(time);
