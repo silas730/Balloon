@@ -15,7 +15,8 @@ Todo:
 -Add serial debug interface.
 -Update data header
 -Add gps fix/accuracy check
--Initialization of BMP280 temp/pressure sensor repeatedly failed. Realted to I2C. 
+-Initialization of BMP280 temp/pressure sensor repeatedly failed. Realted to I2C.
+-GPS is not outputting data 
 
 Tests:
 
