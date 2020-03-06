@@ -9,7 +9,7 @@ Todo:
   -GPS Start - Done
   -GPS fix
   -Geiger counter
-  -External temp
+  -External temp - Done
 -Add light sensor.
 -Remove Serial prints for each sensor. -> When finished with everything else
 -Add serial debug interface.
