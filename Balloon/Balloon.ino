@@ -101,7 +101,7 @@ void setup() {
 
   //openFile();
   //dataFile = SD.open("data.txt", FILE_WRITE);
-}
+}//End of setup
 
 
  //TODO add checks for each sensor to see if it is connected and working. Also replace checks above ^
@@ -116,7 +116,7 @@ void loop() {
     time_start = millis();
     
     /*Time increment*/
-    int timeFromStart = millis()/1000;
+    unsigned long timeFromStart = millis()/1000;
     /*Gieger counter average over 5 seconds*/
     float geigerCount = avgGeiger();
     /*Internal pressure from bmp280 sensor*/
@@ -249,7 +249,7 @@ void loop() {
     geiger_ct = 0;
   }
  dataFile.flush();
-}
+}//End of loop
 
 /**
  * Gets the time  in GMT from the gps
