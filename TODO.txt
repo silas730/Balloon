@@ -8,15 +8,14 @@ Todo:
   -SD card reader - Done
   -GPS Start - Done
   -GPS fix
-  -Geiger counter
-  -External temp
+  -Geiger counter   
+  -External temp 
 -Add light sensor.
 -Remove Serial prints for each sensor. -> When finished with everything else
 -Add serial debug interface.
 -Update data header
--Add gps fix/accuracy check
+-Add gps accuracy check
 -Initialization of BMP280 temp/pressure sensor repeatedly failed. Realted to I2C.
--GPS is not outputting data 
 
 Tests:
 

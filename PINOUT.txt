@@ -9,10 +9,10 @@ SCK:  DIO 52 Mega - DIO 13 Uno
 
 Ultimate GPS from adafruit:
 
-Vin: +5V
+Vin: +5V    
 GND: GND
-RX:  DIO 2
-TX:  DIO 3
+RX:  DIO 10
+TX:  DIO 11
 
 Si7021 Temp/Humidity Sensor:
 

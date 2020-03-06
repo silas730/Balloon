@@ -17,7 +17,7 @@ int led = 31; //The LED pin
 
 /*GPS Stuff*/
 //8 > TX; 7 > RX (can be changed)
-SoftwareSerial mySerial(8, 7);
+SoftwareSerial mySerial(11, 10);
 Adafruit_GPS GPS(&mySerial);
 #define GPSECHO false
 
@@ -101,7 +101,7 @@ void setup() {
 
   //openFile();
   //dataFile = SD.open("data.txt", FILE_WRITE);
-}
+}//End of setup
 
 
  //TODO add checks for each sensor to see if it is connected and working. Also replace checks above ^
@@ -117,7 +117,7 @@ void loop() {
     time_start = millis();
     
     /*Time increment*/
-    int timeFromStart = millis()/1000;
+    unsigned long timeFromStart = millis()/1000;
     /*Gieger counter average over 5 seconds*/
     float geigerCount = avgGeiger();
     /*Internal pressure from bmp280 sensor*/
@@ -239,7 +239,7 @@ void loop() {
     geiger_ct = 0;
   }
  dataFile.flush();
-}
+}//End of loop
 
 /**
  * Gets the time  in GMT from the gps
