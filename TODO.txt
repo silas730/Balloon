@@ -9,13 +9,14 @@ Todo:
   -GPS Start - Done
   -GPS fix
   -Geiger counter   
-  -External temp 
+  -External temp - done
 -Add light sensor.
 -Remove Serial prints for each sensor. -> When finished with everything else
 -Add serial debug interface.
 -Update data header
 -Add gps accuracy check
 -Initialization of BMP280 temp/pressure sensor repeatedly failed. Realted to I2C.
+-Change print to inlcude more decimal places.
 
 Tests:
 
