@@ -17,9 +17,8 @@ int led = 31; //The LED pin
 
 /*GPS Stuff*/
 //8 > TX; 7 > RX (can be changed)
-SoftwareSerial mySerial(8, 7);
+SoftwareSerial mySerial(11, 10);
 Adafruit_GPS GPS(&mySerial);
-#define GPSECHO false
 
 /*Adafruit temp and humidity sensor*/
 Adafruit_BMP280 bmp;
@@ -71,8 +70,12 @@ void setup() {
     Serial.println(F("SD card reader initialization failed"));
     startupCheck = false;
   }
-                  
-  Serial.println(F("Time (sec):\tClicks per secound:\t Internal Pressure (Pa)\tInternal Temperature (°C) \tRel Humidity:\tExternal Pressure (Pa): \t External Temp: \tLatitude: \tLongitude: \tAltitude(m) \tSpeed(knts) \tDirection: \tTime\n"));
+  
+  if (lm335Temp(LM335TEMP_PIN, LM335UNITS) < -20 || lm335Temp(LM335TEMP_PIN, LM335UNITS) > 70) {
+    Serial.println(F("Exteranl temperature sensor not found")); 
+    startupCheck = false;
+  }                
+  Serial.println(F("Time(sec):\tClicks per secound:\tInternal Pressure(Pa)\tInternal Temperature(°C)\tRel Humidity:\tExternal Pressure(Pa):\tExternal Temp:\tLatitude:\tLongitude:\tAltitude(m)\tSpeed(knts)\tDirection:\tSatellites:\tTime\n"));
 
   //Opens the data file and marks the start
   dataFile = SD.open("data.txt", FILE_WRITE);
@@ -89,10 +92,7 @@ void setup() {
   GPS.sendCommand(PMTK_SET_NMEA_OUTPUT_RMCGGA); //this mode cuts out a bunch of the more technical data, if we need more I can change it.
   GPS.sendCommand(PMTK_SET_NMEA_UPDATE_200_MILLIHERTZ); //Update internal data storage every 5 seconds
 
-  if (lm335Temp(LM335TEMP_PIN, LM335UNITS) < -20 || lm335Temp(LM335TEMP_PIN, LM335UNITS) > 70) {
-    Serial.print(F("Exteranl temperature sensor not found")); 
-    startupCheck = false;
-  }
+  
   
   //If a sensor fails to initialize the led will turn on
   if (!startupCheck) {
@@ -106,10 +106,9 @@ void setup() {
 
  //TODO add checks for each sensor to see if it is connected and working. Also replace checks above ^
 void loop() {
-  char c = GPS.read();
-  if ((c) && (GPSECHO)) Serial.write(c);
+  GPS.read();
   if (GPS.newNMEAreceived()) {
-    if (!GPS.parse(GPS.lastNMEA())) return;
+    GPS.parse(GPS.lastNMEA());
   }
 
   if(millis() - time_start > 5000){
@@ -141,6 +140,8 @@ void loop() {
     float gpsSpeed = GPS.speed;
     /*Course in degrees from true north*/
     float angle = GPS.angle;
+    /*number of satalites in use*/
+    int satellites = GPS.satellites;
 
     /*GMT time from gps Hours:Minutes:Seconds*/
     String time = getTime();
@@ -229,12 +230,21 @@ void loop() {
     //Serial.println();
     //dataFile.println();
 
+    //Writes and print the number of satellites in use
+    Serial.print(satellites);
+    dataFile.print(satellites);
+    
+    Serial.print(F("\t"));
+    dataFile.print(F("\t"));
+    
     //Writes and prints the time down to the second in GMT
     Serial.print(time);
     dataFile.print(time);
-
+    
     Serial.println();
-    dataFile.println();    
+    dataFile.println();
+
+   
 
     geiger_ct = 0;
   }
