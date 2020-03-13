@@ -21,13 +21,6 @@ GND: GND
 SDA: DIO 20 Mega - A4 Uno
 SCL: DIO 21 Mega - A5 Uno
 
-BMP280 Temp/Pressure Sensor:
-
-Vin: +5V
-GND: GND
-SDI: DIO 20 Mega - A4 Uno
-SCK: DIO 21 Mega - A5 Uno
-
 HSCDANN001BA2A3 pressure sensor:
 					   ________
 1 - GND: GND				1 -|O     |- 8
@@ -36,9 +29,13 @@ HSCDANN001BA2A3 pressure sensor:
 4 - SCL: DIO 21 Mega - A5 Uno           4 -|      |- 5
 5-8 NC:  do not use.                       --------
 
-LM335 Temp Sensor:
+LM335 External Temp Sensor:
 
 Data in: A0
+
+LM335 Internal Temp Sensor:
+
+Data in: A1
 
 LED: 
 
