@@ -146,12 +146,6 @@ void loop() {
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
     
-    //Writes and prints the internal temperature and pressure from bmp 280
-    Serial.print(intPressure);
-    dataFile.print(intPressure);
-    Serial.print(F("\t"));
-    dataFile.print(F("\t"));
-    
     Serial.print(intTemp, 7);
     dataFile.print(intTemp, 7);
     Serial.print(F("\t"));
