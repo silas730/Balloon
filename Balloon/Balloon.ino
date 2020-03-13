@@ -75,11 +75,13 @@ void setup() {
     Serial.println(F("Exteranl temperature sensor not found")); 
     startupCheck = false;
   }                
-  Serial.println(F("Time(sec):\tClicks per secound:\tInternal Pressure(Pa)\tInternal Temperature(°C)\tRel Humidity:\tExternal Pressure(Pa):\tExternal Temp:\tLatitude:\tLongitude:\tAltitude(m)\tSpeed(knts)\tDirection:\tSatellites:\tTime\n"));
+  Serial.println(F("Time(sec):\tClicks per secound:\tInternal Temperature(°C)\tRel Humidity:\tExternal Pressure(Pa):\tExternal Temp:\tLatitude:\tLongitude:\tAltitude(m)\tSpeed(knts)\tDirection:\tSatellites:\tTime\n"));
 
   //Opens the data file and marks the start
   dataFile = SD.open("data.txt", FILE_WRITE);
   dataFile.println("\n--------------Start--------------");
+  dataFile.println(F("Time(sec):\tClicks per secound:\tInternal Temperature(°C)\tRel Humidity:\tExternal Pressure(Pa):\tExternal Temp:\tLatitude:\tLongitude:\tAltitude(m)\tSpeed(knts)\tDirection:\tSatellites:\tTime\n"));
+
   dataFile.flush();
 
   /*Starts the GPS*
@@ -94,10 +96,8 @@ void setup() {
 
   
   
-  //If a sensor fails to initialize the led will turn on
-  if (!startupCheck) {
-    digitalWrite(led, HIGH);
-  }
+  //Turns the debug LED on. It will turn off when avgGeiger() is called if startupCheck is true and the geiger counter is working
+  digitalWrite(led, HIGH);
 
   //openFile();
   //dataFile = SD.open("data.txt", FILE_WRITE);
@@ -154,8 +154,8 @@ void loop() {
     dataFile.print(F("\t"));
     
     //Writes and prints the average geiger count over 5 seconds
-    Serial.print(geigerCount);
-    dataFile.print(geigerCount);
+    Serial.print(geigerCount, 7);
+    dataFile.print(geigerCount, 7);
     
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
@@ -166,63 +166,63 @@ void loop() {
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
     
-    Serial.print(intTemp);
-    dataFile.print(intTemp);
+    Serial.print(intTemp, 7);
+    dataFile.print(intTemp, 7);
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
     
     //Writes and prints relative humidity
-    Serial.print(relHumidity);
-    dataFile.print(relHumidity);
+    Serial.print(relHumidity, 7);
+    dataFile.print(relHumidity, 7);
 
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
     
     //Writes and prints the external Pressure
-    Serial.print(extPressure);
-    dataFile.print(extPressure);
+    Serial.print(extPressure, 7);
+    dataFile.print(extPressure, 7);
     
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
     
     //Writes and prints external temperature
-    Serial.print(extTemp);
-    dataFile.print(extTemp);
+    Serial.print(extTemp, 7);
+    dataFile.print(extTemp, 7);
 
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
 
     //Writes and prints latitude in decimal degrees
-    Serial.print(latitude);
-    dataFile.print(latitude);
+    Serial.print(latitude, 7);
+    dataFile.print(latitude, 7);
 
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
 
     //Writes and prints longitude in decimal degrees
-    Serial.print(longitude);
-    dataFile.print(longitude);
+    Serial.print(longitude, 7);
+    dataFile.print(longitude, 7);
 
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
 
     //Writes and prints altitude in meters
-    Serial.print(altitude);
-    dataFile.print(altitude);
+    Serial.print(altitude, 7);
+    dataFile.print(altitude, 7);
 
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
 
     //Writes and prints current speed over ground in knots 
-    Serial.print(gpsSpeed);
-    dataFile.print(gpsSpeed);
+    Serial.print(gpsSpeed, 3);
+    dataFile.print(gpsSpeed, 3);
 
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
 
     //Writes and prints course in degrees from true north
-    Serial.print(angle);
-    dataFile.print(angle);
+    Serial.print(angle, 3);
+    dataFile.print(angle, 3);
 
     Serial.print(F("\t"));
     dataFile.print(F("\t"));
@@ -275,6 +275,9 @@ void openFile(){
  * returns the average geiger counts over 5 seconds
  */
 float avgGeiger(){
+  if (geiger_ct > 0 && startupCheck == true) {
+    digitalWrite(led, LOW);
+  }
   return (float)geiger_ct/5.0;
 }
  
